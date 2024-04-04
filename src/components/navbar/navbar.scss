@@ -1,0 +1,93 @@
+@use "../../assets/styles/values.scss" as base;
+
+// nav.navbar {
+//   display: flex;
+//   justify-content: space-around;
+//   align-items: center;
+//   flex-wrap: wrap;
+//   gap: 20px;
+//   background-color: base.$bg-dark;
+//   color: base.$color-light;
+//   padding: 20px 0px;
+
+//   .logo {
+//     font-size: 1.5rem;
+//     font-weight: bold;
+//     a{
+//         color: base.$color-light;
+
+//     }
+//   }
+//   .menu {
+//     display: flex;
+//     align-items: center;
+//     gap: 40px;
+//     .link {
+//       color: base.$color-light;
+//       font-size: large;
+//       &.active{
+//         border-bottom: 1px solid base.$color-light;
+//         font-size: larger;
+//         color: #fff;
+//       }
+//     }
+//   }
+// }
+
+#header {
+  transition: background-color 0.3s ease;
+}
+
+#header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: base.$bg-dark;
+  padding: 0;
+  padding-right: 10px;
+  position: sticky;
+  top: 0px;
+  right: 0px;
+  z-index: 99;
+  &.scrolledNav {
+    // opacity: .3;
+    background: rgba(0, 0, 0, .5) !important;
+    // .link{
+
+    //   color: black;
+    // }
+  }
+  .logo {
+    padding-left: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    a {
+      color: base.$color-light;
+    }
+  }
+
+  #menues {
+    .link {
+      color: base.$color-light;
+      font-size: large;
+      &.active {
+        border-bottom: 5px solid base.$color-light;
+
+        font-size: larger;
+        color: #fff;
+      }
+    }
+  }
+
+  .rightGroup {
+    cursor: pointer;
+    .username{
+      color: base.$color-light;
+    }
+  }
+
+  .navBtns {
+    display: flex;
+    gap: 6px;
+  }
+}

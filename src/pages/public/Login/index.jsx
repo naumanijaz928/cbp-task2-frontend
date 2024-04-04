@@ -1,14 +1,11 @@
-import { useState } from "react";
 import { useAuth } from "../../../core/store/authContext";
-import { Button, Checkbox, Form, Input, Row, Typography } from "antd";
+import { Button, Form, Input, Row, Typography } from "antd";
 import "./login.scss";
 import { Link } from "react-router-dom";
 
-const { Text, Title } = Typography;
+const { Title } = Typography;
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const { login, loading, error } = useAuth();
   const handleLogin = (values) => {
     login(values);
@@ -60,10 +57,15 @@ const Login = () => {
             Login
           </Button>
         </Form.Item>
-        <Link to="forget-password" className="forget">
-          Forget Password
-          {/* <Text ></Text> */}
-        </Link>
+        <div className="links">
+          <Link to="forget-password" className="forget">
+            Forget Password
+          </Link>
+          <Link to="/register" className="signin">
+            Create Account
+          
+          </Link>
+        </div>
       </Form>
     </div>
   );

@@ -3,19 +3,32 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
-import { Layout } from "./layout";
+import { PrivateLayout } from "./layout";
 import { Error } from "./pages/public";
-import { About, Contact, Courses, Home } from "./pages/private";
+import { Contact, Courses, Home } from "./pages/private";
 import { useAuth } from "./core/store/authContext";
-import { Login } from "./pages/public";
+import { Login, About } from "./pages/public";
 import PublicLayout from "./layout/PublicLayout";
+import RegisterStudent from "./pages/public/Register";
 
 function App() {
   const { user } = useAuth();
   const router = createBrowserRouter([
     {
+      path: "courses",
+      element: !user ? <Navigate to="/login" /> : <PrivateLayout />,
+      errorElement: <Error />,
+      children: [
+        {
+          path: "courses",
+          element: <Courses />,
+        },
+      ],
+    },
+    {
       path: "/",
-      element: !user ? <Navigate to="/login" /> : <Layout />,
+      element:
+        user || user?.access_token ? <PrivateLayout /> : <PublicLayout />,
       errorElement: <Error />,
       children: [
         {
@@ -31,27 +44,23 @@ function App() {
           path: "contact",
           element: <Contact />,
         },
-        {
-          path: "courses",
-          element: <Courses />,
-        },
-      ],
-    },
-    {
-      element:
-        !user || !user?.access_token ? <PublicLayout /> : <Navigate to="/" />,
-      errorElement: <Error />,
-      children: [
+
         {
           path: "login",
-          element: <Login />,
+          element:
+            user || user?.access_token ? (
+              <Navigate to="/" replace />
+            ) : (
+              <Login />
+            ),
         },
-        // {
-        //   path: "forgot-password",
-        //   element: <ForgotPassword />,
-        // },
+        {
+          path: "register",
+          element: user ? <Navigate to="/" replace /> : <RegisterStudent />,
+        },
       ],
     },
+
     {
       path: "*",
       element: <div>not found</div>,
