@@ -1,0 +1,14 @@
+@use "../../../assets/styles/values.scss" as base;
+
+#registerPage {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  background-image: url("https://www.shu.ac.uk/-/media/home/global/header-images/contact-us.jpg?mw=1276&hash=A6B3A688768C61071F6A83F147E6AE94") !important;
+  background-repeat: no-repeat;
+  background-size:cover;
+
+}

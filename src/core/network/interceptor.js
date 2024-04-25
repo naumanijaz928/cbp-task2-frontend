@@ -1,6 +1,5 @@
 import axios from "axios";
-// created an instance from axios to intercept every request we will send to backend
-// request handler
+
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_KEY,
   headers: {
@@ -13,7 +12,7 @@ instance.interceptors.request.use(
     if (user) {
       const authData = JSON.parse(user);
       if (authData && authData?.access_token) {
-        config.headers.Authorization = `Bearer ${authData.access_token}`;
+        config.headers.Authorization = `Bearer abcd`;
       }
     }
     return config;

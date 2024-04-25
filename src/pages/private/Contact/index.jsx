@@ -1,9 +1,12 @@
-import React from 'react'
+import ContactUsForm from "../../../components/forms/contactusForm";
+import "./contact.scss";
 
 const Contact = () => {
   return (
-    <div>Contact</div>
-  )
-}
+    <div id="registerPage">
+      <ContactUsForm />
+    </div>
+  );
+};
 
-export default Contact
+export default Contact;
