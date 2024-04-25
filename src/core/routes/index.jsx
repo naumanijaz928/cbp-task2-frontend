@@ -8,14 +8,15 @@ import PublicLayout from "../../layout/PublicLayout";
 import { useAuth } from "../store/authContext";
 import { About, Error, Login, RegisterStudent } from "../../pages/public";
 import { Contact, Courses, Home } from "../../pages/private";
+import Profile from "../../pages/private/Profile";
 
 function Routes() {
   const { user } = useAuth();
+  const isAuthenticated = user || user?.access_token;
   const router = createBrowserRouter([
     {
       path: "/",
-      element:
-        user || user?.access_token ? <PrivateLayout /> : <PublicLayout />,
+      element: isAuthenticated ? <PrivateLayout /> : <PublicLayout />,
       errorElement: <Error />,
       children: [
         {
@@ -33,16 +34,15 @@ function Routes() {
         },
         {
           path: "courses",
-          element: user || user?.access_token ? <Courses /> : <Login />,
+          element: isAuthenticated ? <Courses /> : <Login />,
+        },
+        {
+          path: "profile",
+          element: isAuthenticated ? <Profile /> : <Login />,
         },
         {
           path: "login",
-          element:
-            user || user?.access_token ? (
-              <Navigate to="/" replace />
-            ) : (
-              <Login />
-            ),
+          element: isAuthenticated ? <Navigate to="/" replace /> : <Login />,
         },
         {
           path: "register",

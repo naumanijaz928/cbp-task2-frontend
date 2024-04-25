@@ -132,7 +132,7 @@ const Navbar = ({ menuState }) => {
             className="rightGroup"
           >
             <Avatar shape="square" size="large" icon={<RiUser3Line />} />
-            <Text color="#fff" className="username">{user?.username}</Text>
+            <Text color="#fff" className="username">{user?.token?.username}</Text>
             <IoMdArrowDropdown size={20} />
           </Flex>
         </Dropdown>

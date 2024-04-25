@@ -8,6 +8,7 @@ import {
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { message } from "antd";
 import { LoginAPI } from "../apis";
+import { jwtDecode } from "jwt-decode";
 const AuthContext = createContext();
 // created context for global state management
 export const AuthProvider = ({ children }) => {
@@ -24,12 +25,15 @@ export const AuthProvider = ({ children }) => {
         // MOKE API CALL
         const res = await LoginAPI(data);
         if (res?.status < 400) {
-          setUser(res?.data);
-          message.success("Login Success")
+          if (res?.data?.access) {
+            const token = jwtDecode(res?.data?.access);
+            setUser({ ...res?.data, token });
+            message.success("Login Success");
+          }
           setError(null);
         } else {
           setError("invalid username/password");
-          message.error( res?.data?.detail);
+          message.error(res?.data?.detail);
         }
         setLoading(false);
       } catch (error) {
@@ -40,8 +44,6 @@ export const AuthProvider = ({ children }) => {
     },
     [user]
   );
-
-
 
   // logout function
   const logout = useCallback(() => {

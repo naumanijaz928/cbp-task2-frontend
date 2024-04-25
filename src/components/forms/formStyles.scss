@@ -5,7 +5,9 @@
   background-color: rgba(237, 244, 250, 0.5);
   border-radius: 20px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  width: 800px;
+  &.Login {
+    width: 800px;
+  }
 
   .headingText {
     font-weight: bold;
