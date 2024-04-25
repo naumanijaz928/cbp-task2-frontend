@@ -1,0 +1,50 @@
+@use "../../assets/styles/values.scss" as base;
+.Form {
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(237, 244, 250, 0.5);
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  width: 800px;
+
+  .headingText {
+    font-weight: bold;
+    word-spacing: 1 !important;
+    color: base.$bg-dark;
+  }
+
+  .fields {
+    height: 3.5rem;
+    font-size: large;
+    color: base.$bg-dark;
+    font-weight: 600;
+  }
+
+  .submitBtn {
+    height: 3.5rem;
+    width: 100%;
+    margin-top: 20px;
+    font-size: large;
+    font-weight: 600;
+    background-color: base.$bg-dark;
+  }
+
+  .links {
+    display: flex;
+    justify-content: space-between;
+
+    .forget {
+      font-size: large;
+      font-weight: 600;
+    }
+    .signin {
+      gap: 5px;
+      display: flex;
+      align-items: center;
+      font-size: large;
+      font-weight: 600;
+      text-decoration: underline;
+      // text-decoration: underline;
+    }
+  }
+}

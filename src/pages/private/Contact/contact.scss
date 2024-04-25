@@ -6,34 +6,8 @@
   align-items: center;
   justify-content: center;
   overflow: auto;
-  #messageForm {
-    text-align: center;
-    padding: 20px;
-    // border: 1px solid black;
-    background-color: rgba(237, 244, 250, 0.5);
-    border-radius: 20px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    width: 800px;
-    // height: 90vh;
+  background-image: url("https://www.shu.ac.uk/-/media/home/global/header-images/contact-us.jpg?mw=1276&hash=A6B3A688768C61071F6A83F147E6AE94") !important;
+  background-repeat: no-repeat;
+  background-size:cover;
 
-    .headingText {
-      font-weight: bold;
-      word-spacing: 1 !important;
-      color: #003b73;
-    }
-
-    .fields {
-      height: 3.5rem;
-      font-size: large;
-    }
-
-    .submitBtn {
-      height: 3.5rem;
-      width: 100%;
-      margin-top: 20px;
-      font-size: large;
-      font-weight: 600;
-      background-color: base.$bg-dark;
-    }
-  }
 }

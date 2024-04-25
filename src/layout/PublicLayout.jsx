@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../components/navbar";
 import { FloatButton, Layout } from "antd";
 
-const PrivateLayout = () => {
+const PublicLayout = () => {
   return (
     <Layout>
       <Navbar />
@@ -15,4 +15,4 @@ const PrivateLayout = () => {
   );
 };
 
-export default PrivateLayout;
+export default PublicLayout;

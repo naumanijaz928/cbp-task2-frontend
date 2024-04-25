@@ -7,41 +7,14 @@ import {
 } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { message } from "antd";
+import { LoginAPI } from "../apis";
 const AuthContext = createContext();
 // created context for global state management
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useLocalStorage("user", null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
   // created moke api for testing
-  const loginAPI = (data) => {
-    return new Promise((res, rej) => {
-      if (data.username === "abdullah" && data.password === "password") {
-        setTimeout(() => {
-          res({
-            data: {
-              username: "abdullah",
-              id: 203,
-              year: "2024",
-              access_token: "aajffeueaofuyef342424hohfouh44",
-            },
-            meta: {
-              status: 200,
-              message: "login success",
-            },
-          });
-        }, 2000);
-      } else {
-        rej({
-          meta: {
-            status: 403,
-            message: "invalid username or password",
-          },
-        });
-      }
-    });
-  };
 
   ///// loging function
   const login = useCallback(
@@ -49,13 +22,14 @@ export const AuthProvider = ({ children }) => {
       try {
         setLoading(true);
         // MOKE API CALL
-        const res = await loginAPI(data);
-        if (res?.meta?.status < 400) {
+        const res = await LoginAPI(data);
+        if (res?.status < 400) {
           setUser(res?.data);
+          message.success("Login Success")
           setError(null);
         } else {
-          setError(res?.meta?.message);
-          message.error(res?.meta?.message);
+          setError("invalid username/password");
+          message.error( res?.data?.detail);
         }
         setLoading(false);
       } catch (error) {
@@ -66,6 +40,9 @@ export const AuthProvider = ({ children }) => {
     },
     [user]
   );
+
+
+
   // logout function
   const logout = useCallback(() => {
     setUser(null);

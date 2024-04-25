@@ -1,15 +1,26 @@
-import { Button, Col, Form, Input, Row, Typography, Upload } from "antd";
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  Row,
+  Typography,
+  Upload,
+  message,
+} from "antd";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdDeleteOutline, MdOutlineFileUpload } from "react-icons/md";
 // import { MdOutlineFileUpload } from "react-icons/md";
 import "./registerStudent.scss";
-
+import { RegisterStudentAPI } from "../../../core/apis";
+import dayjs from "dayjs";
 const { Title } = Typography;
 const RegisterStudent = () => {
+  const [registerForm] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [imageFile, setImageFile] = useState(null);
-
+  const navigate = useNavigate();
   const beforeUpload = (file) => {
     // Limit to only one image file
     const isImage = file.type.startsWith("image/");
@@ -22,8 +33,25 @@ const RegisterStudent = () => {
   const onRemove = () => {
     setImageFile(null);
   };
-  const handleRegister = (values) => {
-    console.log(values);
+  const handleRegister = async (values) => {
+    setLoading(true);
+    try {
+      const obj = {
+        ...values,
+        image: "data:image/png;base64,iVBORw0KGgoA",
+        date_of_birth: dayjs(values?.data_of_birth).format("X"),
+      };
+      const res = await RegisterStudentAPI(obj);
+      if (res?.status < 400) {
+        message.success(res?.data?.message);
+        registerForm.resetFields();
+        navigate("/login");
+        console.log(res);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
   };
   return (
     <div id="registerPage">
@@ -33,9 +61,10 @@ const RegisterStudent = () => {
         onFinish={handleRegister}
         autoComplete="off"
         id="registerForm"
+        form={registerForm}
       >
         <Title className="headingText">Register Account</Title>
-        <Form.Item >
+        <Form.Item>
           <Upload
             beforeUpload={beforeUpload}
             maxCount={1}
@@ -96,10 +125,40 @@ const RegisterStudent = () => {
           </Col>
         </Row>
         <Row gutter={[12, 24]}>
+          <Col sm={24} md={12} lg={12}>
+            <Form.Item
+              label="First Name"
+              name="first_name"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your First Name!",
+                },
+              ]}
+            >
+              <Input className="fields" />
+            </Form.Item>
+          </Col>
+          <Col sm={24} md={12} lg={12}>
+            <Form.Item
+              label="Last Name"
+              name="last_name"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your Last Name!",
+                },
+              ]}
+            >
+              <Input className="fields" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={[12, 24]}>
           <Col span={24}>
             <Form.Item
               label="Date Of Birth"
-              name="dob"
+              name="date_of_birth"
               rules={[
                 {
                   required: true,
