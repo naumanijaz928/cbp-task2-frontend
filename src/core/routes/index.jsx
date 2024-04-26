@@ -9,6 +9,8 @@ import { useAuth } from "../store/authContext";
 import { About, Error, Login, RegisterStudent } from "../../pages/public";
 import { Contact, Courses, Home } from "../../pages/private";
 import Profile from "../../pages/private/Profile";
+import React from "react";
+import Registrations from "../../pages/private/Registrations";
 
 function Routes() {
   const { user } = useAuth();
@@ -34,11 +36,15 @@ function Routes() {
         },
         {
           path: "courses",
-          element: isAuthenticated ? <Courses /> : <Login />,
+          element: <ProtectedRoute component={<Courses />} />,
         },
         {
           path: "profile",
-          element: isAuthenticated ? <Profile /> : <Login />,
+          element: <ProtectedRoute component={<Profile />} />,
+        },
+        {
+          path: "registrations",
+          element: <ProtectedRoute component={<Registrations />} />,
         },
         {
           path: "login",
@@ -59,3 +65,16 @@ function Routes() {
 }
 
 export default Routes;
+
+const ProtectedRoute = ({ component }) => {
+  const { user } = useAuth();
+  const isAuthenticated = user || user?.access_token;
+
+  if (isAuthenticated) {
+    return component;
+  }
+  return <Login />;
+};
+ProtectedRoute.propTypes = {
+  component: React.Component,
+};

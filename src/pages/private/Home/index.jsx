@@ -36,13 +36,15 @@ const Home = () => {
       </div>
       <div className="ContentSection">
         <h1 className="feature subheading">Featured Courses</h1>
-        <Courses courses={featureCourses} />
+        <div style={{ textAlign: "center" }}>
+          <Courses />
+        </div>
         <h1 className="feature subheading">Trending Courses</h1>
-        <Carousel autoplay>
+        {/* <Carousel autoplay>
           <Courses courses={featureCourses} />
           <Courses courses={featureCourses} />
           <Courses courses={featureCourses} />
-        </Carousel>
+        </Carousel> */}
       </div>
       <div></div>
     </div>
