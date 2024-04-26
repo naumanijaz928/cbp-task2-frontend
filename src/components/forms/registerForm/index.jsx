@@ -1,6 +1,7 @@
 import {
   Button,
   Col,
+  DatePicker,
   Form,
   Input,
   Row,
@@ -14,10 +15,10 @@ import { MdDeleteOutline, MdOutlineFileUpload } from "react-icons/md";
 // import { MdOutlineFileUpload } from "react-icons/md";
 import "../formStyles.scss";
 import dayjs from "dayjs";
-import { RegisterStudentAPI } from "../../../core/apis";
+import { RegisterStudentAPI, UpdateStudentAPI } from "../../../core/apis";
 
 const { Title } = Typography;
-const RegisterForm = ({ user = {} }) => {
+const RegisterForm = ({ handleOk, user = {} }) => {
   const [registerForm] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [imageFile, setImageFile] = useState(null);
@@ -40,11 +41,16 @@ const RegisterForm = ({ user = {} }) => {
       const obj = {
         ...values,
         image: "data:image/png;base64,iVBORw0KGgoA",
-        date_of_birth: dayjs(values?.data_of_birth).format("X"),
+        date_of_birth: dayjs(values?.date_of_birth).format("X"),
+        email: "",
       };
 
       if (user?.id) {
-        console.log(obj);
+        const res = await UpdateStudentAPI(obj);
+        if (res?.status < 400) {
+          message.success("Profile Updated");
+          handleOk();
+        }
       } else {
         const res = await RegisterStudentAPI(obj);
         if (res?.status < 400) {
@@ -131,15 +137,12 @@ const RegisterForm = ({ user = {} }) => {
             name="password"
             rules={[
               {
-                required: !user?.id ? true : false,
+                required: true,
                 message: "Please input your password!",
               },
             ]}
           >
-            <Input.Password
-              className="fields"
-              disabled={user?.id ? true : false}
-            />
+            <Input.Password className="fields" />
           </Form.Item>
         </Col>
       </Row>
@@ -189,7 +192,14 @@ const RegisterForm = ({ user = {} }) => {
               },
             ]}
           >
-            <Input className="fields" type="date" />
+            <DatePicker
+              placeholder="Enter Date of Birth"
+              style={{ width: "100%" }}
+              className="fields"
+              size="large"
+              format="MM-DD-YYYY"
+            />
+            {/* <Input className="fields" type="date" /> */}
           </Form.Item>
         </Col>
       </Row>

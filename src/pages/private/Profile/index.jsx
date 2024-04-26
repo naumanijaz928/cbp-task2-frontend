@@ -11,7 +11,7 @@ import {
   Typography,
   message,
 } from "antd";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./profile.scss";
 import { getStudentProfile } from "../../../core/apis";
 import { useAuth } from "../../../core/store/authContext";
@@ -106,8 +106,8 @@ const Profile = () => {
         width={"50%"}
       >
         <Flex wrap="wrap" gap={5}>
-          {Object.entries(profile)?.map(([key, val]) => (
-            <Card style={{ width: "30%" }}>
+          {Object.entries(profile)?.map(([key, val], ind) => (
+            <Card style={{ width: "30%" }} key={ind}>
               <Title level={5}>{key}</Title>
               <Title level={4} style={{ color: "#003b73" }}>
                 {val}
@@ -125,7 +125,7 @@ const Profile = () => {
         width={"60%"}
         destroyOnClose
       >
-        <RegisterForm user={profile} />
+        <RegisterForm user={profile} handleOk={handleOk} />
       </Modal>
     </div>
   );
