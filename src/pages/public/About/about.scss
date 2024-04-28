@@ -1,0 +1,39 @@
+@use "../../../assets/styles/values.scss" as base;
+
+.heading {
+  text-align: center;
+  //   border: 1px solid black;
+  color: orange;
+  font-size: 4rem;
+  font-weight: 600;
+}
+
+.details {
+  text-align: justify;
+  line-height: 2rem;
+  letter-spacing: 2px;
+  font-size: large;
+  .uniname {
+    color: base.$bg-dark;
+    font-size: 1.5rem;
+  }
+}
+.discover {
+  height: 3rem;
+  width: 10rem;
+  display: block;
+  margin: auto;
+  // border: 1px solid black;
+  background: base.$bg-dark;
+  font-size: large;
+  color: white;
+}
+.usefulLinks {
+  margin-top: 30px;
+  text-align: center;
+  color: base.$bg-dark;
+}
+
+.cardResearch {
+  margin-top: 20px;
+}

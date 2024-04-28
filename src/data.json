@@ -1,0 +1,53 @@
+{
+    "courses": [
+      {
+        "id": 1,
+        "name": "Introduction to Python Programming",
+        "description": "Learn the fundamentals of Python programming language.",
+        "instructor": "John Doe",
+        "duration": "6 weeks",
+        "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      },
+      {
+        "id": 2,
+        "name": "Web Development Bootcamp",
+        "description": "Become a full-stack web developer with this comprehensive bootcamp.",
+        "instructor": "Jane Smith",
+        "duration": "12 weeks",
+        "image": "https://images.unsplash.com/photo-1527689368864-3a821dbccc34?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2ViJTIwZGV2ZWxvcG1lbnQlMjBjb3Vyc2VzfGVufDB8fDB8fHww"
+      },
+      {
+        "id": 3,
+        "name": "Data Science Fundamentals",
+        "description": "Explore the essentials of data science and machine learning.",
+        "instructor": "Michael Johnson",
+        "duration": "8 weeks",
+        "image": "https://images.unsplash.com/photo-1448932223592-d1fc686e76ea?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHdlYiUyMGRldmVsb3BtZW50JTIwY291cnNlc3xlbnwwfHwwfHx8MA%3D%3D"
+      },
+      {
+        "id": 4,
+        "name": "Mobile App Development with React Native",
+        "description": "Build cross-platform mobile apps using React Native framework.",
+        "instructor": "Emily Williams",
+        "duration": "10 weeks",
+        "image": "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHdlYiUyMGRldmVsb3BtZW50JTIwY291cnNlc3xlbnwwfHwwfHx8MA%3D%3D"
+      },
+      {
+        "id": 5,
+        "name": "Introduction to Machine Learning",
+        "description": "Gain a foundational understanding of machine learning algorithms and techniques.",
+        "instructor": "David Brown",
+        "duration": "8 weeks",
+        "image": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fHdlYiUyMGRldmVsb3BtZW50JTIwY291cnNlc3xlbnwwfHwwfHx8MA%3D%3D"
+      },
+      {
+        "id": 6,
+        "name": "JavaScript Basics",
+        "description": "Learn the basics of JavaScript programming language for web development.",
+        "instructor": "Sarah Johnson",
+        "duration": "4 weeks",
+        "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHdlYiUyMGRldmVsb3BtZW50JTIwY291cnNlc3xlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
+  }
+  
