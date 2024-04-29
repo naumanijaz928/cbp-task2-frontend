@@ -11,8 +11,8 @@ instance.interceptors.request.use(
     const user = localStorage.getItem("user");
     if (user) {
       const authData = JSON.parse(user);
-      if (authData && authData?.access_token) {
-        config.headers.Authorization = `Bearer abcd`;
+      if (authData && authData?.access) {
+        config.headers.Authorization = `Bearer ${authData?.access}`;
       }
     }
     return config;

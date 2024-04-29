@@ -8,14 +8,17 @@ import PublicLayout from "../../layout/PublicLayout";
 import { useAuth } from "../store/authContext";
 import { About, Error, Login, RegisterStudent } from "../../pages/public";
 import { Contact, Courses, Home } from "../../pages/private";
+import Profile from "../../pages/private/Profile";
+import React from "react";
+import Registrations from "../../pages/private/Registrations";
 
 function Routes() {
   const { user } = useAuth();
+  const isAuthenticated = user || user?.access_token;
   const router = createBrowserRouter([
     {
       path: "/",
-      element:
-        user || user?.access_token ? <PrivateLayout /> : <PublicLayout />,
+      element: isAuthenticated ? <PrivateLayout /> : <PublicLayout />,
       errorElement: <Error />,
       children: [
         {
@@ -33,16 +36,19 @@ function Routes() {
         },
         {
           path: "courses",
-          element: user || user?.access_token ? <Courses /> : <Login />,
+          element: <ProtectedRoute component={<Courses />} />,
+        },
+        {
+          path: "profile",
+          element: <ProtectedRoute component={<Profile />} />,
+        },
+        {
+          path: "registrations",
+          element: <ProtectedRoute component={<Registrations />} />,
         },
         {
           path: "login",
-          element:
-            user || user?.access_token ? (
-              <Navigate to="/" replace />
-            ) : (
-              <Login />
-            ),
+          element: isAuthenticated ? <Navigate to="/" replace /> : <Login />,
         },
         {
           path: "register",
@@ -59,3 +65,16 @@ function Routes() {
 }
 
 export default Routes;
+
+const ProtectedRoute = ({ component }) => {
+  const { user } = useAuth();
+  const isAuthenticated = user || user?.access_token;
+
+  if (isAuthenticated) {
+    return component;
+  }
+  return <Login />;
+};
+ProtectedRoute.propTypes = {
+  component: React.Component,
+};

@@ -16,7 +16,7 @@ const LoginForm = () => {
       layout="vertical"
       onFinish={handleLogin}
       autoComplete="off"
-      className="Form"
+      className="Form Login"
     >
       <Title className="headingText">Login</Title>
       <Form.Item

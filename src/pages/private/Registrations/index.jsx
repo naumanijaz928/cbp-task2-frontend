@@ -1,12 +1,12 @@
-import { Spin, message } from "antd";
-import Course from "../course";
-import "./courses.scss";
-import { getCourses } from "../../core/apis";
-import { useEffect, useState } from "react";
-const Courses = ({ count = 3 }) => {
+import React, { useEffect, useState } from "react";
+import { getCourses, getRegisterCourses } from "../../../core/apis";
+import { useAuth } from "../../../core/store/authContext";
+import { List } from "antd";
+
+const Registrations = () => {
+  const { user } = useAuth();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
-
   const getCoursesFun = async () => {
     setLoading(true);
     try {
@@ -23,19 +23,18 @@ const Courses = ({ count = 3 }) => {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     getCoursesFun();
   }, []);
-  if (loading) return <Spin spinning={loading} />;
   return (
-    <div className="coursesList">
-      {courses?.length > 0 &&
-        courses?.map(
-          (course, index) =>
-            index < count && <Course course={course} key={index} />
-        )}
+    <div>
+      Registrations
+      {courses?.map((course) => (
+        <div>{course?.name}</div>
+      ))}
     </div>
   );
 };
 
-export default Courses;
+export default Registrations;
