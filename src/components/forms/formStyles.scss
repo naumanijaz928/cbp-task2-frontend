@@ -50,3 +50,37 @@
     }
   }
 }
+
+
+
+.delete-button {
+  position: absolute;
+  left: 0;
+  bottom: 8px;
+  z-index: 10;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  padding: 1rem 2rem; /* Tailwind uses rem for padding */
+  border-radius: 0.5rem 1rem; /* Tailwind uses rem for border-radius */
+  background-color: #FF3A29;
+  &:hover {
+    background-color: #d0021b; /* Equivalent of red-400 in SCSS */
+  }
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem; /* Tailwind uses rem for gap */
+}
+
+.LabelStyles {
+  display: flex;
+  align-items: center;
+  gap: 2rem; /* Tailwind uses rem for gap */
+  margin-top: 4rem; /* Tailwind uses rem for margin */
+  border-radius: 0.5rem; /* Tailwind uses rem for border-radius */
+  color: #2255A6;
+  padding: 2rem 6rem; /* Tailwind uses rem for padding */
+  cursor: pointer;
+}

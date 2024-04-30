@@ -5,6 +5,7 @@ import {
   Col,
   Drawer,
   Flex,
+  Image,
   Modal,
   Row,
   Spin,
@@ -65,13 +66,23 @@ const Profile = () => {
   useEffect(() => {
     getProfileFun();
   }, []);
+
+  let profileValues = [];
+  Object.entries(profile)?.map(([key, val], ind) =>
+    profileValues.push({ key: ind, label: key, children: val })
+  );
+  console.log(profileValues, "list");
   return (
     <div className="container">
       <Spin spinning={loading}>
         <Card>
           <Row gutter={[12, 24]} justify="space-between">
             <Col span={4}>
-              <Avatar size={200} shape="square" />
+              {profile?.image ? (
+                <Image src={profile?.image} width={200} height={200} />
+              ) : (
+                <Avatar size={200} shape="square" />
+              )}
             </Col>
             <Col xs={24} sm={24} md={24} lg={18}>
               <Flex justify="space-between">
@@ -79,7 +90,9 @@ const Profile = () => {
                   <Title>
                     Name : {profile?.first_name || "N/A"} {profile?.last_name}
                   </Title>
-                  <Title level={3}>Email : {profile?.email || "N/A"}</Title>
+                  <Title level={3}>
+                    Username : {profile?.username || "N/A"}
+                  </Title>
                   <Title level={3}>
                     Date Of Birth :{" "}
                     {dayjs.unix(profile?.date_of_birth).format("DD/MM/YYYY") ||
@@ -125,7 +138,11 @@ const Profile = () => {
         width={"60%"}
         destroyOnClose
       >
-        <RegisterForm user={profile} handleOk={handleOk} />
+        <RegisterForm
+          user={profile}
+          handleOk={handleOk}
+          refetch={getProfileFun}
+        />
       </Modal>
     </div>
   );

@@ -1,48 +1,45 @@
 import {
+  Avatar,
   Button,
   Col,
   DatePicker,
+  Flex,
   Form,
+  Image,
   Input,
   Row,
   Typography,
   Upload,
   message,
 } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MdDeleteOutline, MdOutlineFileUpload } from "react-icons/md";
 // import { MdOutlineFileUpload } from "react-icons/md";
 import "../formStyles.scss";
 import dayjs from "dayjs";
 import { RegisterStudentAPI, UpdateStudentAPI } from "../../../core/apis";
+import { FaCamera } from "react-icons/fa";
+import { FaUserLarge } from "react-icons/fa6";
+import { HiOutlineTrash } from "react-icons/hi";
 
-const { Title } = Typography;
-const RegisterForm = ({ handleOk, user = {} }) => {
+const { Text, Title } = Typography;
+const RegisterForm = ({ handleOk, refetch, user = {} }) => {
   const [registerForm] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const [imageFile, setImageFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
+  const [, setImageFile] = useState(undefined);
+
   const navigate = useNavigate();
-  const beforeUpload = (file) => {
-    // Limit to only one image file
-    const isImage = file.type.startsWith("image/");
-    if (!isImage) {
-      message.error("You can only upload image files!");
-    }
-    setImageFile(file);
-    return false; // Prevent default upload behavior
-  };
-  const onRemove = () => {
-    setImageFile(null);
-  };
+
   const handleRegister = async (values) => {
     setLoading(true);
     try {
       const obj = {
         ...values,
-        image: "data:image/png;base64,iVBORw0KGgoA",
+        image: imageUrl || "",
         date_of_birth: dayjs(values?.date_of_birth).format("X"),
-        email: "",
+        // email: "",
       };
 
       if (user?.id) {
@@ -50,6 +47,7 @@ const RegisterForm = ({ handleOk, user = {} }) => {
         if (res?.status < 400) {
           message.success("Profile Updated");
           handleOk();
+          refetch();
         }
       } else {
         const res = await RegisterStudentAPI(obj);
@@ -65,8 +63,40 @@ const RegisterForm = ({ handleOk, user = {} }) => {
     }
     setLoading(false);
   };
+
+  const handleImageChange = (event) => {
+    const file = event.target.files?.[0];
+
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) {
+      message.error("Image file size exceeds 2 MB limit.");
+      return;
+    }
+
+    const allowedExtensions = ["image/png", "image/jpeg", "image/jpg"];
+    if (!allowedExtensions.includes(file.type)) {
+      message.error("Only PNG, JPG, and JPEG files are allowed.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => setImageUrl(reader.result); // Set image URL on load
+    reader.onerror = (error) => console.error("Error reading file:", error); // Handle errors
+
+    setImageFile(file); // Store the file object for potential future use
+  };
+  const handleImageDelete = () => {
+    setImageFile(undefined);
+    setImageUrl(undefined);
+  };
+  useEffect(() => {
+    setImageUrl(user?.image);
+  }, [user?.image]);
+
   return (
     <Form
+      style={{ marginTop: "100px" }}
       name="registerForm"
       layout="vertical"
       onFinish={handleRegister}
@@ -74,10 +104,13 @@ const RegisterForm = ({ handleOk, user = {} }) => {
         username: user?.username,
         first_name: user?.first_name,
         last_name: user?.last_name,
-        date_of_birth: dayjs.unix(user?.date_of_birth),
+        date_of_birth: user?.date_of_birth
+          ? dayjs.unix(user?.date_of_birth)
+          : dayjs(),
         address: user?.address,
         country: user?.country,
         city: user?.city,
+        email: user?.email || "",
       }}
       autoComplete="off"
       className="Form"
@@ -86,36 +119,39 @@ const RegisterForm = ({ handleOk, user = {} }) => {
       <Title className="headingText">
         {user?.id ? "Update Profile" : "Register Account"}
       </Title>
-      {/* <Form.Item>
-        <Upload
-          beforeUpload={beforeUpload}
-          maxCount={1}
-          accept="image/*"
-          fileList={
-            imageFile
-              ? [
-                  {
-                    uid: "image",
-                    name: "image",
-                    status: "done",
-                    url: URL.createObjectURL(imageFile),
-                  },
-                ]
-              : []
-          }
-          listType="picture-card"
-          onRemove={onRemove}
-        >
-          {imageFile ? (
-            <div>
-              <MdDeleteOutline size={20} />
-              <div style={{ marginTop: 8 }}>Change</div>
-            </div>
-          ) : (
-            <Button icon={<MdOutlineFileUpload />}>Upload Image</Button>
-          )}
-        </Upload>
-      </Form.Item> */}
+      <Flex vertical align="center" justify="space-between">
+        <Text>Profile Picture</Text>
+        {imageUrl ? (
+          <div style={{ position: "relative", padding: "10px" }}>
+            <button
+              className="delete-button"
+              type="button"
+              onClick={handleImageDelete}
+            >
+              <HiOutlineTrash size={20} /> Delete Photo
+            </button>
+            <Image width={160} height={180} src={imageUrl} />
+          </div>
+        ) : (
+          <Avatar shape="square" size={180} icon={<FaUserLarge />} />
+        )}
+        <div>
+          <label
+            style={{ border: "1px solid #2255A6" }}
+            htmlFor="image-upload"
+            className="LabelStyles"
+          >
+            <FaCamera /> Upload Image
+            <input
+              type="file"
+              accept="image/*"
+              id="image-upload"
+              style={{ display: "none" }}
+              onChange={handleImageChange}
+            />
+          </label>
+        </div>
+      </Flex>
       <Row gutter={[12, 24]}>
         <Col sm={24} md={12} lg={12}>
           <Form.Item
@@ -137,7 +173,7 @@ const RegisterForm = ({ handleOk, user = {} }) => {
             name="password"
             rules={[
               {
-                required: true,
+                required: user?.id ? false : true,
                 message: "Please input your password!",
               },
             ]}
