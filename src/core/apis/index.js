@@ -28,6 +28,11 @@ export const getCourses = async () => {
   const res = await instance.get(`${BASE_URL}/api/courses/get_courses_list`);
   return res;
 };
+
+export const getRegisterCourses = async () => {
+  const res = await instance.get(`${BASE_URL}/api/courses/get_student_module_register`);
+  return res;
+};
 export const RegisterModuleAPI = async (values) => {
   const res = await instance.post(
     `${BASE_URL}/api/courses/add_student_module_register`,

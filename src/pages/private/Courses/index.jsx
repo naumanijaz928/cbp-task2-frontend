@@ -65,13 +65,6 @@ const Courses = () => {
   useEffect(() => {
     getCoursesFun();
   }, []);
-  if (loading)
-    return (
-      <Spin
-        spinning={loading}
-        style={{ marginLeft: "50%", marginTop: "10px" }}
-      />
-    );
 
   const modules = courses?.map((mod) => {
     return {
@@ -146,7 +139,14 @@ const Courses = () => {
   return (
     <div style={{ height: "92vh", overflow: "auto", padding: "10px 20px" }}>
       <h1 style={{ padding: "0px 0px 10px 0px" }}>Course Modules</h1>
-      <Collapse items={modules} defaultActiveKey={[first_course]} />
+      {loading ? (
+        <Spin
+          spinning={loading}
+          style={{ marginLeft: "50%", marginTop: "10px" }}
+        />
+      ) : (
+        <Collapse items={modules} defaultActiveKey={[first_course]} />
+      )}
     </div>
   );
 };
